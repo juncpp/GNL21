@@ -9,39 +9,94 @@
 /*   Updated: 2021/11/08 20:58:24 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*
-static void	ft_inic(size_t *k, size_t *j, size_t *i)
-{
-	*k = 0;
-	*j = 0;
-	*i = 0;
-}
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-	size_t	j;
-	size_t	k;
-	size_t	tmp;
+#include "get_next_line.h"
 
-	ft_inic(&k, &j, &i);
-	tmp = dstsize;
-	while (src[k] != '\0')
-		k++;
-	while (dst[i] != '\0' && tmp != 0)
-	{
+char	*ft_strcreate(char *dst, char *src)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	while (dst[i])
 		i++;
-		tmp--;
-	}
-	if (tmp == 0)
-		return (dstsize + k);
-	while (i < dstsize - 1 && src[j] != '\0')
+	while (*src)
 	{
-		dst[i] = src[j];
-		j++;
+		dst[i] = *src;
+		src++;
 		i++;
 	}
 	dst[i] = '\0';
-	return (k + i - j);
+	return (dst);
 }
-*/
+
+int	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*s2;
+	int		i;
+
+	i = 0;
+	while (s1[i])
+		i++;
+	s2 = (char *)malloc(sizeof(char) * (i + 1));
+	if (s2 == NULL)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		s2[i] = s1[i];
+		i++;
+	}
+	s2[i] = '\0';
+	return (s2);
+}
+
+char	*ft_str(int size, t_list **list)
+{
+	char	*str;
+	int		i;
+	t_list	*tmp;
+
+	i = 0;
+	if (size == 0)
+		return (NULL);
+	str = (char *)malloc(sizeof(char) * (size + 1));
+	if (NULL == str)
+		return (NULL);
+	str[0] = '\0';
+	tmp = *list;
+	while (tmp != NULL)
+	{
+		str = ft_strcreate(str, tmp->c);
+		*list = (*list)->next;
+		free(tmp->c);
+		free(tmp);
+		tmp = *list;
+		i++;
+	}
+	return (str);
+}
+
+int	ft_count(t_list *list)
+{
+	int	i;
+
+	i = 0;
+	while (list)
+	{
+		i += ft_strlen(list->c);
+		list = list->next;
+	}
+	return (i);
+}

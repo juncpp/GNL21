@@ -19,8 +19,13 @@
 # endif
 typedef struct	s_list
 {
-	char			c;
+	char			*c;
 	struct s_list	*next;
 }				t_list;
+char	*ft_strcreate(char *dst, char *src);
+int		ft_strlen(const char *s);
+char	*ft_strdup(const char *s1);
+char	*ft_str(int size, t_list **list);
+int		ft_count(t_list *list);
 char	*get_next_line(int fd);
 #endif
