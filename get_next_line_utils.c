@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
 char	*ft_strcreate(char *dst, char *src)
 {
 	int	i;
@@ -41,24 +40,31 @@ int	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strdup(const char *s1)
+char	*ft_strdup(const char *s1, int size, int flag)
 {
 	char	*s2;
 	int		i;
+	int		j;
 
-	i = 0;
-	while (s1[i])
-		i++;
+	j = 0;
+	i = ft_strlen(s1);
+	if (size == 0)
+		size = ft_strlen(s1);
+	if (size != 0 || flag != 0)
+		i = size - flag;
+	if (i < 0)
+		i = -i;
 	s2 = (char *)malloc(sizeof(char) * (i + 1));
 	if (s2 == NULL)
 		return (NULL);
-	i = 0;
-	while (s1[i])
+	i = flag;
+	while (i < size)
 	{
-		s2[i] = s1[i];
+		s2[j] = s1[i];
 		i++;
+		j++;
 	}
-	s2[i] = '\0';
+	s2[j] = '\0';
 	return (s2);
 }
 
