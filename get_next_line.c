@@ -6,17 +6,11 @@
 /*   By: mmeredit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:50:08 by mmeredit          #+#    #+#             */
-/*   Updated: 2021/11/09 17:33:49 by mmeredit         ###   ########.fr       */
+/*   Updated: 2021/11/17 18:15:47 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
-
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 
 void	add_back(char *c, t_list **list, int size, int flag)
 {
@@ -39,29 +33,42 @@ void	add_back(char *c, t_list **list, int size, int flag)
 	}
 }
 
-int	checkbuff(char *buff, int *size)
+int	checkbuff(char *buff, int **size)
 {
 	int	i;
 	int	flag;
 
 	i = 0;
-	if (size != 0)
-		i = *size;
+	if (**size != 0)
+		i = **size;
 	flag = i;
-	*size = 0;
+	**size = 0;
 	while (buff[i])
 	{
 		if (buff[i] == '\n')
 		{
-			*size = i + 1;
-			if (buff[i + 1] == '\0')
-				return (flag);
-			else
-				return (flag);
+			**size = i + 1;
+			return (flag);
 		}
 		i++;
 	}
 	return (flag);
+}
+
+t_list	*newl(char *buff, int *size, t_list *list, int *nl)
+{
+	int	flag;
+
+	*nl = 0;
+	flag = checkbuff(buff, &size);
+	add_back(buff, &list, *size, flag);
+	if (*size != 0)
+	{
+		if (buff[*size] == '\0')
+			*size = 0;
+		*nl = -1;
+	}
+	return (list);
 }
 
 char	*get_next_line(int fd)
@@ -85,33 +92,10 @@ char	*get_next_line(int fd)
 		}
 		if (ft_strlen(buff) == 0)
 			break ;
-		flag = checkbuff(buff, &size);
-		if (size != 0)
-		{
-			add_back(buff, &list, size, flag);
-			if (buff[size] == '\0')
-				size = 0;
+		list = newl(buff, &size, list, &flag);
+		if (flag == -1)
 			break ;
-		}
-		else
-			add_back(buff, &list, size, flag);
 	}
 	str = ft_str(ft_count(list), &list);
-	if (str == NULL)
-		free(str);
 	return (str);
 }
-/*int main()
-{
-    int fd;
-    fd = open("input.txt", O_RDONLY);
-    printf ("%s", get_next_line(fd));
-    printf ("%s", get_next_line(fd));
-  printf ("%s", get_next_line(fd));
-printf ("%s", get_next_line(fd));
- 	printf ("%s", get_next_line(fd));
-  	printf ("%s", get_next_line(fd));
- 	printf ("%s", get_next_line(fd));
- 	printf ("%s", get_next_line(fd));
-	printf ("%s", get_next_line(fd));
-}*/

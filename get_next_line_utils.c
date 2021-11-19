@@ -6,11 +6,12 @@
 /*   By: mmeredit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:58:21 by mmeredit          #+#    #+#             */
-/*   Updated: 2021/11/08 20:58:24 by mmeredit         ###   ########.fr       */
+/*   Updated: 2021/11/17 18:16:05 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
 char	*ft_strcreate(char *dst, char *src)
 {
 	int	i;
